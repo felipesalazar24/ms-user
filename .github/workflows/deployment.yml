@@ -45,8 +45,8 @@ jobs:
       - name: Aplicar Cambios en Kubernetes
         run: |
           # Aplica solo el manifiesto de ms-user
-          kubectl apply -f ./k8s/ms-user-deployment.yaml
-          kubectl apply -f ./k8s/ms-user-service.yaml
+          kubectl apply -f ./k8s/deployment.yaml
+          kubectl apply -f ./k8s/service.yaml
           
           # Reinicia el pod para tomar la nueva imagen
-          kubectl rollout restart deployment ms-user-deployment
+          kubectl rollout restart deployment deployment
