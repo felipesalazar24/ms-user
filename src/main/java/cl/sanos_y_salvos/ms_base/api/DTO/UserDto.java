@@ -10,14 +10,18 @@ public class UserDto {
     private Long id;
     private String name;
     private String lastName;
+    
     @NotBlank(message = "El correo es obligatorio")
     @Pattern(
-        regexp = "^[a-zA-Z0-9._%+-]+@(gmail\\.com|gmail\\.cl|duocuc\\.cl)$",
-        message = "El correo debe pertenecer a los dominios permitidos: @gmail.com, @gmail.cl o @duocuc.cl"
+        regexp = "^[a-zA-Z0-9._%+-]+@(gmail\\.com|gmail\\.cl|duocuc\\.cl|sanosysalvos\\.onmicrosoft\\.com)$",
+        message = "El correo debe pertenecer a los dominios permitidos: @gmail.com, @gmail.cl, @duocuc.cl o el dominio de Azure"
     )
     private String email;
+    
     private String password;
-    private int phoneNumber;
+    
+    private Long phoneNumber;
+    
     private String address;
     private int addressNumber;
     private String city;

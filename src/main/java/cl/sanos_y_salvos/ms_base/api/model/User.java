@@ -12,16 +12,16 @@ import lombok.Builder;
 @Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class User {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 30, unique = false,nullable = false)
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 
-    @Column(name = "last_name", length = 30, unique = false, nullable = false)
+    @Column(name = "last_name", length = 30, nullable = false)
     private String lastName;
 
     @Column(name = "email", length = 255, unique = true, nullable = false)
@@ -30,8 +30,9 @@ public class User {
     @Column(name = "password", length = 255, nullable = false)
     private String password;
     
+    // Cambiado a Long para soportar NUMBER(15) de Oracle
     @Column(name = "phone_number", unique = true, nullable = false)
-    private int phoneNumber;
+    private Long phoneNumber;
     
     @Column(name = "address", length = 100, nullable = false)
     private String address;
@@ -45,6 +46,7 @@ public class User {
     @Column(name = "country", length = 50, nullable = false)
     private String country;
     
-    @Column(name = "role", length = 20, nullable = false, columnDefinition = "varchar(20) default 'user'")
+    // Eliminado columnDefinition y ajustado length a 50
+    @Column(name = "role", length = 50, nullable = false)
     private String role;
 }
