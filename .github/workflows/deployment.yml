@@ -49,4 +49,4 @@ jobs:
           kubectl apply -f ./k8s/service.yaml
           
           # Reinicia el pod para tomar la nueva imagen
-          kubectl rollout restart deployment deployment
+          kubectl rollout restart deployment ms-user-deployment
