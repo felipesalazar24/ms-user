@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-user-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-user
+  template:
+    metadata:
+      labels:
+        app: ms-user
+    spec:
+      containers:
+      - name: ms-user
+        image: tu-registro-aws/ms-user:latest
+        ports:
+        - containerPort: 8081
+        env:
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: oracle-db-secrets
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: oracle-db-secrets
+              key: password
+        - name: DB_URL
+          value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
+        volumeMounts:
+        - name: oracle-wallet-volume
+          mountPath: /app/wallet
+          readOnly: true
+      volumes:
+      - name: oracle-wallet-volume
+        secret:
+          secretName: oracle-wallet-secret

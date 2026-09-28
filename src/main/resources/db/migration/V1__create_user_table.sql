@@ -1,0 +1,13 @@
+CREATE TABLE users (
+    id NUMBER(19) GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR2(30) NOT NULL,
+    last_name VARCHAR2(30) NOT NULL,
+    email VARCHAR2(255) NOT NULL UNIQUE,
+    password VARCHAR2(255) NOT NULL,
+    phone_number NUMBER(15) NOT NULL UNIQUE,
+    address VARCHAR2(100) NOT NULL,
+    address_number NUMBER(10) NOT NULL,
+    city VARCHAR2(50) NOT NULL,
+    country VARCHAR2(50) NOT NULL,
+    role VARCHAR2(50) NOT NULL
+);
