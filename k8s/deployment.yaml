@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ms-user
-        image: tu-registro-aws/ms-user:latest
+        image: felipesalazar24/ms-user:latest
         ports:
         - containerPort: 8081
         env:
