@@ -23,6 +23,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Construir y Subir imagen ms-user
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/ms-user:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/ms-user:latest
+
   deploy-to-aws:
     name: Deploy ms-user to AWS EKS
     needs: build-and-push-docker
@@ -44,9 +49,5 @@ jobs:
 
       - name: Aplicar Cambios en Kubernetes
         run: |
-          # Aplica solo el manifiesto de ms-user
-          kubectl apply -f ./k8s/deployment.yaml
-          kubectl apply -f ./k8s/service.yaml
-          
-          # Reinicia el pod para tomar la nueva imagen
+          kubectl apply -f ./k8s/
           kubectl rollout restart deployment ms-user-deployment
