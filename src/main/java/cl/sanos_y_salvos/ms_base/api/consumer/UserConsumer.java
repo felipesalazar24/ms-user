@@ -17,6 +17,10 @@ public class UserConsumer {
     @RabbitListener(queues = "q.pet.command", ackMode = "MANUAL")
     public void consumeCommand(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag) throws IOException {
         try {
+            if (message.contains("simular_error")) {
+                throw new RuntimeException("Validación de negocio fallida");
+            }
+            
             LOGGER.info("Procesando comando: " + message);
             channel.basicAck(deliveryTag, false);
         } catch (Exception e) {
@@ -61,4 +65,6 @@ public class UserConsumer {
     public void consumeAuditDlq(String message) {
         LOGGER.warning("[DLQ AUDITORIA] Mensaje fallido: " + message);
     }
+
+    
 }
