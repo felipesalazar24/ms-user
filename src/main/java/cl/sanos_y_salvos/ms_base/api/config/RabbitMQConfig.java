@@ -19,7 +19,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue commandDlq() {
-        return new Queue("q.pet.command.dlq", true);
+        return QueueBuilder.durable("q.pet.command.dlq").build();
     }
 
     @Bean
@@ -37,7 +37,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue notificationDlq() {
-        return new Queue("q.user.notification.dlq", true);
+        return QueueBuilder.durable("q.user.notification.dlq").build();
     }
 
     @Bean
@@ -57,7 +57,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue auditDlq() {
-        return new Queue("q.system.audit.dlq", true);
+        return QueueBuilder.durable("q.system.audit.dlq").build();
     }
 
     @Bean
