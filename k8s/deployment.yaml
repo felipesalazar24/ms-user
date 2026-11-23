@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: ms-user-deployment
   labels:
-    app: ms-pet
+    app: ms-user
 spec:
   replicas: 1
   selector:
@@ -15,31 +15,39 @@ spec:
         app: ms-user
     spec:
       containers:
-      - name: ms-user
-        image: felipesalazar24/ms-user:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8081
-        env:
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: oracle-db-secrets
-              key: username
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: oracle-db-secrets
-              key: password
-        - name: DB_URL
-          value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
-        - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
-          value: "kafka-service:9092"
-        volumeMounts:
-        - name: oracle-wallet-volume
-          mountPath: /app/wallet
-          readOnly: true
+        - name: ms-user
+          image: felipesalazar24/ms-user:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-db-secrets
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-db-secrets
+                  key: password
+            - name: DB_URL
+              value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq-service"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USER
+              value: "guest"
+            - name: RABBITMQ_PASS
+              value: "guest"
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-service:9092"
+          volumeMounts:
+            - name: oracle-wallet-volume
+              mountPath: /app/wallet
+              readOnly: true
       volumes:
-      - name: oracle-wallet-volume
-        secret:
-          secretName: oracle-wallet-secret
+        - name: oracle-wallet-volume
+          secret:
+            secretName: oracle-wallet-secret
