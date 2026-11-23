@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ms-user-deployment
+  labels:
+    app: ms-pet
 spec:
   replicas: 1
   selector:
@@ -15,6 +17,7 @@ spec:
       containers:
       - name: ms-user
         image: felipesalazar24/ms-user:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8081
         env:
@@ -30,6 +33,8 @@ spec:
               key: password
         - name: DB_URL
           value: "jdbc:oracle:thin:@sanosysalvosdb_high?TNS_ADMIN=/app/wallet"
+        - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+          value: "kafka-service:9092"
         volumeMounts:
         - name: oracle-wallet-volume
           mountPath: /app/wallet
